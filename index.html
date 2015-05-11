@@ -1,0 +1,60 @@
+<!doctype html>
+<html class="no-js" lang="" ng-app="BeyonceApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Angular Training - May 9 - Thinkspace</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.css">
+  </head>
+  <body>
+
+    <main class="container" ng-controller="MainCtrl">
+      <h1>{{name}}, check out these Beyonce headlines!</h1>
+
+      <div class="row">
+        <div class="btn-group pull-left">
+          <span class="btn">Sort by: </span>
+          <sort-button value="date" text="Date" sort="sorting">Date</sort-button>
+          <sort-button value="headline" text="Headline" sort="sorting">Headline</sort-button>
+        </div>
+
+        <div class="btn-group pull-right">
+          <span class="btn">
+          <button class="btn default" ng-click="categoryFilter()">Show All</button>
+          <button class="btn btn-default" ng-repeat="category in availableCategories" ng-click="categoryFilter(category)">{{category}}</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-group">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-search"></span>
+          </span>
+          <input type="text" class="form-control" ng-model="filtering">
+        </div>
+      </div>
+
+      <div class="row">
+        <article class="col-sm-3 list-group" ng-repeat="tabloid in tabloids | orderBy:sorting.by:sorting.ascend | filter:filtering | filter:selectedCategory">
+          <div class="list-group-item">
+            <img ng-src="{{ tabloid.image }}" />
+            <h2>{{ tabloid.headline }}</h2>
+            <p>{{ tabloid.content }}</p>
+            <p>{{ tabloid.date | date:longDate }}</p>
+
+            <button class="btn btn-xs btn-primary" ng-repeat="category in tabloid.categories" ng-click="categoryFilter(category )" style="margin-right: 4px;">{{category}}</button>
+          </div>
+        </article>
+      </div>
+
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
